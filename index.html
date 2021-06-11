@@ -13,10 +13,9 @@
 
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script type="text/plain" async src="https://www.googletagmanager.com/gtag/js?id=UA-159826830-1"></script>
+  <script type="text/plain" data-cookiecategory="targeting" async src="https://www.googletagmanager.com/gtag/js?id=UA-159826830-1"></script>
 
   <script type="text/plain" 
-    data-cookiescript="accepted" 
     data-cookiecategory="targeting" >
     
     window.dataLayer = window.dataLayer || [];
@@ -24,7 +23,9 @@
     gtag('js', new Date());
   
     gtag('config', 'UA-159826830-1');
+
   </script>
+  
   
 
 
@@ -32,7 +33,17 @@
 </head>
 
 <body>
-Κούκι μπάνερ
+  <div id="mytext">scripts not loaded yet</div>
+
+  <script type="text/javascript" 
+    data-cookiecategory="functionality" >
+
+    console.log('aloha');
+    window.document.getElementById('mytext').innerHTML = '1. targeting script ok';
+
+  </script>
+
+
 
 <iframe 
   width="560" 

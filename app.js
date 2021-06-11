@@ -1,3 +1,15 @@
+/**
+ * COOKIES CATEGORIES
+ * strict
+ * functionality
+ * targeting
+ * performance
+ * unclassified
+ *  
+ */
+
+
+
 
 // set and get cookies function
 const cookieStorage = {
@@ -16,18 +28,20 @@ const cookieStorage = {
     }
 }
 
-const enableScripts = () => {
+const enableScripts = (acceptedCookieCategory) => {
     // if script are accepted enable them
     // disabled scripts are plain text
     // enabled are converted to javascript
 
     const scripts = document.getElementsByTagName('script');
     for (let i = 0; i < scripts.length; i++) {
-        // if (scripts[i].dataset.cookiescript =='accepted') {
+        if (scripts[i].dataset.cookiecategory == acceptedCookieCategory) {
     
-            console.log(i, scripts[i].dataset.cookiescript);
+            console.log(i, scripts[i].dataset.cookiecategory);
             scripts[i].type = 'text/javascript';
-        // }
+            console.log(scripts[i], ' changed');
+
+        }
     }
 }
 
@@ -47,10 +61,11 @@ const enableIframes = () => {
 
 
 const storageType = cookieStorage; //set storage type to cookies
-const consentPropertyName = 'aead_consent'; //custom name for our cookie 
+const consentPropertyName = 'cookie_consent_user_accepted'; //custom name for our cookie 
 
 //ask/show msg banner if consent cookie is missing
 const shouldShowPopup = () => !storageType.getItem(consentPropertyName); 
+// console.log( storageType.getItem(consentPropertyName) +'shouldShowPopup')
 
 // if consent is given set cookie value to true
 let consent_level = '';
@@ -67,49 +82,78 @@ console.log(saveToStorage)
 
 window.onload = () => {
     
+    // it is called when the accept button is clicked
     const acceptFn = event => {
 
         // 0. initialize variables
         const functionalityCookie = document.getElementById('functionality-cookie');
         const targetingCookie = document.getElementById('targeting-cookie');
+        consent_level = 'strict' + ' '; // just for reference
 
 
-        const consent_level_array = [];
-        consent_level_array.push('strict'); // add strict just for reference 
-        
         // 1. select accepted categories
+        // 1.1 if functionality cookies are accepted save value
         if (functionalityCookie.checked) {
-            consent_level_array.push(functionalityCookie.value);
-            console.log(functionalityCookie.value);
-            console.log(consent_level_array);
-
-            // ENABLE FUNCTION
+            consent_level += functionalityCookie.value  + ' ';;
+            console.log(consent_level);       
 
         }
+        // 1.2 if targeting cookies are accepted save value to array
         if (targetingCookie.checked) {
-            consent_level_array.push(targetingCookie.value);
-            console.log(targetingCookie.value);
-            console.log(consent_level_array);
+            consent_level += targetingCookie.value;
+            console.log(consent_level);       
+     
 
         }
 
-        // 2. save content into cookie storage
-        consent_level = consent_level_array.join(' '); // consent_level is string
-        // console.log(consent_level);       
-        saveToStorage(storageType);
-
+        // 2.
+        consent_level
+            .split(' ')
+            .forEach(category => {
+                enableScripts(category);
+                console.log(' enable script with category ' + category);
+                enableIframes(category);
+                console.log('enable iframe with category ' + category);                
+            });
+        
+        console.log(consent_level);       
+        saveToStorage(storageType);   
+        
+        
         //3. hide msg banner
         consentPopup.classList.add('hidden'); 
+        // document.getElementById('mytext').innerHTML = '1. google targeting script ok';
+
     }
 
     const consentPopup = document.getElementById('consent-popup');
     const acceptBtn = document.getElementById('accept');
+
+
     acceptBtn.addEventListener('click', acceptFn);
 
+
+    // IF cookie is missing display consent banner...
     if (shouldShowPopup(storageType)) {
         setTimeout(() => {
             consentPopup.classList.remove('hidden');
         }, 1000);
+
+        // TODO convert iframes to img
+
+        // ... ELSE loop through stored cookie's accepted categories and enable scripts
+    } else {
+
+        const cookiesAcceptedCategories = storageType.getItem(consentPropertyName).split(' '); 
+        cookiesAcceptedCategories.forEach(category => {
+            enableScripts(category);
+            console.log(' cookie is here scripts enabled');
+            enableIframes(category);
+            console.log(' cookie is here frames enabled');
+            
+        }); 
     }
+
+
 
 };
