@@ -45,16 +45,16 @@ const enableScripts = (acceptedCookieCategory) => {
     }
 }
 
-const enableIframes = () => {
+const enableIframes = (acceptedCookieCategory) => {
 
     // if iframes are accepted enable them
     const iframes = document.getElementsByTagName('iframe');
     for (let i = 0; i < iframes.length; i++) {
-        // if (iframes[i].dataset.src && iframes[i].dataset.cookiescript =='accepted') {
+        if (iframes[i].dataset.src && iframes[i].dataset.cookiecategory == acceptedCookieCategory) {
     
             // console.log(i, iframes[i].dataset.src);
             iframes[i].setAttribute('src', iframes[i].dataset.src );
-        // }
+        }
     }
 }
 
@@ -88,25 +88,21 @@ window.onload = () => {
         // 0. initialize variables
         const functionalityCookie = document.getElementById('functionality-cookie');
         const targetingCookie = document.getElementById('targeting-cookie');
-        consent_level = 'strict' + ' '; // just for reference
 
+        consent_level = 'strict' + ' '; // just for reference
 
         // 1. select accepted categories
         // 1.1 if functionality cookies are accepted save value
         if (functionalityCookie.checked) {
             consent_level += functionalityCookie.value  + ' ';;
-            console.log(consent_level);       
-
         }
+
         // 1.2 if targeting cookies are accepted save value to array
         if (targetingCookie.checked) {
-            consent_level += targetingCookie.value;
-            console.log(consent_level);       
-     
-
+            consent_level += targetingCookie.value;    
         }
 
-        // 2.
+        // 2. Loop for each selected category
         consent_level
             .split(' ')
             .forEach(category => {
@@ -122,7 +118,6 @@ window.onload = () => {
         
         //3. hide msg banner
         consentPopup.classList.add('hidden'); 
-        // document.getElementById('mytext').innerHTML = '1. google targeting script ok';
 
     }
 
@@ -147,9 +142,9 @@ window.onload = () => {
         const cookiesAcceptedCategories = storageType.getItem(consentPropertyName).split(' '); 
         cookiesAcceptedCategories.forEach(category => {
             enableScripts(category);
-            console.log(' cookie is here scripts enabled');
+            console.log(' cookie is here scripts enabled ' + category);
             enableIframes(category);
-            console.log(' cookie is here frames enabled');
+            console.log(' cookie is here frames enabled '+ category);
             
         }); 
     }
