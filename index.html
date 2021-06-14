@@ -59,7 +59,8 @@
 
 <img data-alt-src="image.jpg" alt="">
 
-<div id="consent-popup" class="hidden">
+<div id="consent-popup" class="hidden" style="background-color: #0a0a0a;
+color: #efecec;">
   <p>
     Χρησιμοποιούμε τα cookies που είναι αναγκαία για τη διατήρηση της σύνδεσής σας στις ηλεκτρονικές υπηρεσίες της Διαδικτυακής Πύλης (ΔΠ) της Αρχής και για την αποθήκευση των επιλογών σας σε σχέση με τα προαιρετικά cookies («Αναγκαία»).
   Με τη συγκατάθεσή σας και μόνο θα χρησιμοποιήσουμε όποια από τα ακόλουθα προαιρετικά cookies επιλέξετε («Ανάλυσης», «Λειτουργικότητας»). 
@@ -71,12 +72,41 @@
     <label for="functionality-cookie"> Λειτουργικότητας (YouTube)</label>
     <input type="checkbox" id="targeting-cookie" name="targeting-cookie" value="targeting">
     <label for="targeting-cookie"> Ανάλυσης (Google Analytics)</label>
-
-    <a id="accept" href="#">Αποδέχομαι</a>
   </p>
+  <div style="margin-top: 2rem;">
+    <a id="acceptAll" 
+      style="padding: 1rem;
+      color: #000;
+      background-color: #ff0;
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 2px;
+      min-width: 7rem;
+      text-align: center;" 
+      href="#">Αποδοχή όλων (TODO)
+    </a>
+
+    <a id="accept" 
+      style="padding: 1rem;
+      background-color: #eaeaea;
+      color: #111;
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 2px;
+      min-width: 7rem;
+      text-align: center;
+      margin-left: 1rem;" 
+      href="#">Αποδοχή Επιλεγμένων
+    </a>
+
+  
+  </div>
+</div>
+<div>
+  <a id="enable-cookie-banner" href="#">Enable cookie banner</a>
 </div>
 
 
-  <script src="app.js"></script>
+  <script src="aead-cookie-consent.js"></script>
 </body>
 </html>

@@ -3,8 +3,6 @@
  * strict
  * functionality
  * targeting
- * performance
- * unclassified
  *  
  */
 
@@ -121,18 +119,39 @@ window.onload = () => {
 
     }
 
+    
+    // SHOW COOKIE BANNER 
+    const enableCookieBannerFn = () => {
+        setTimeout(() => {
+            consentPopup.classList.remove('hidden');
+        }, 1000);
+    }    
+    
+
     const consentPopup = document.getElementById('consent-popup');
     const acceptBtn = document.getElementById('accept');
-
-
     acceptBtn.addEventListener('click', acceptFn);
+    
+    // SHOW COOKIE BANNER MANUALLY
+    const enableCookieBannerBtn = document.getElementById('enable-cookie-banner');
+    enableCookieBannerBtn.addEventListener('click', enableCookieBannerFn);
+
+    // ACCEPT ALL
+    const acceptAllBtn = document.getElementById('acceptAll');
+    acceptAllBtn.addEventListener('click', () => {
+        console.log('acceptAll selected');
+        consent_level = 'strict functionality targeting'; // add all categories that apply
+        saveToStorage(storageType);   
+        consentPopup.classList.add('hidden'); 
+
+
+    })
 
 
     // IF cookie is missing display consent banner...
     if (shouldShowPopup(storageType)) {
-        setTimeout(() => {
-            consentPopup.classList.remove('hidden');
-        }, 1000);
+
+        enableCookieBannerFn();
 
         // TODO convert iframes to img
 
