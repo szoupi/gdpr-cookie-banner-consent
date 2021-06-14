@@ -1,0 +1,42 @@
+.hidden {
+    opacity: 0;
+}
+ 
+
+#consent-popup {
+    position:fixed;
+    background-color: #0a0a0a;
+    color: #fff;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    transition: opacity 0.8s ease;
+    z-index:100000000;
+}
+
+#acceptAll {
+    style="padding: 1rem;
+    color: #000;
+    background-color: #ff0;
+    text-decoration: none;
+    font-weight: 800;
+    border-radius: 2px;
+    min-width: 7rem;
+    text-align: center;
+
+}
+
+#accept {
+    padding: 1rem;
+    background-color: #eaeaea;
+    color: #111;
+    text-decoration: none;
+    font-weight: 800;
+    border-radius: 2px;
+    min-width: 7rem;
+    text-align: center;
+    margin-left: 1rem;
+
+}
+
