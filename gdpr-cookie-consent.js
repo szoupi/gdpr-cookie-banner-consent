@@ -27,11 +27,23 @@ const cookieStorage = {
     }
 }
 
+// create GOOGLE ANALYTICS scripts MANUALLY
+// <script data-cookiecategory="targeting" async src="https://www.googletagmanager.com/gtag/js?id=UA-159826830-1"></script>
+const loadGoogleAnalyticsFn = () => {
+    const gascript1 = document.createElement('script');
+    gascript1.src = 'https://www.googletagmanager.com/gtag/js?id=UA-159826830-1';
+    gascript1.async = true;
+    document.head.append(gascript1);
+
+    const gascript2 = document.createElement('script');
+    gascript2.src = '/gdpr-cookie-consent/aead_ga.js';
+    // TODO make it inline eg gascript2.innerHTML = 'pure js code';
+    document.head.append(gascript2);
+}
+
 const enableScripts = (acceptedCookieCategory) => {
-    // if script are accepted enable them
     // disabled scripts are plain text
     // enabled are converted to javascript
-
     const scripts = document.getElementsByTagName('script');
     for (let i = 0; i < scripts.length; i++) {
         if (scripts[i].dataset.cookiecategory == acceptedCookieCategory) {
@@ -39,7 +51,6 @@ const enableScripts = (acceptedCookieCategory) => {
             console.log(i, scripts[i].dataset.cookiecategory);
             scripts[i].type = 'text/javascript';
             console.log(scripts[i], ' changed');
-
         }
     }
 }
@@ -74,11 +85,8 @@ const saveToStorage = () => storageType.setItem(consentPropertyName, consent_lev
 
 console.log(saveToStorage)
 
-// console.log(consent_level)
 
-
-
-
+// ///////////////////////////////////////////////////////////////////////////////////
 window.onload = () => {
     
     // it is called when the accept button is clicked
@@ -142,7 +150,9 @@ window.onload = () => {
     acceptAllBtn.addEventListener('click', () => {
         console.log('acceptAll selected');
         consent_level = 'strict functionality targeting'; // add all categories that apply
-        saveToStorage(storageType);   
+        saveToStorage(storageType);
+        loadGoogleAnalyticsFn();
+
         consentPopup.classList.add('hidden'); 
 
 
@@ -161,6 +171,11 @@ window.onload = () => {
 
         const cookiesAcceptedCategories = storageType.getItem(consentPropertyName).split(' '); 
         cookiesAcceptedCategories.forEach(category => {
+            // ENABLE GOOGLE ANALYTICS IF ACCEPTED
+            if (acceptedCookieCategory == 'targeting') {
+                loadGoogleAnalyticsFn();
+            } 
+
             enableScripts(category);
             console.log(' cookie is here scripts enabled ' + category);
             enableIframes(category);
