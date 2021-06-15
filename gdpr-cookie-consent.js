@@ -172,7 +172,7 @@ window.onload = () => {
         const cookiesAcceptedCategories = storageType.getItem(consentPropertyName).split(' '); 
         cookiesAcceptedCategories.forEach(category => {
             // ENABLE GOOGLE ANALYTICS IF ACCEPTED
-            if (acceptedCookieCategory == 'targeting') {
+            if (category == 'targeting') {
                 loadGoogleAnalyticsFn();
             } 
 
