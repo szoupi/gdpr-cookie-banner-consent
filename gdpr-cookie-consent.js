@@ -7,9 +7,6 @@
  */
 
 
-
-
-
 // set and get cookies function
 const cookieStorage = {
     getItem: (item) => {
@@ -27,6 +24,19 @@ const cookieStorage = {
     }
 }
 
+const deleteAllCookies = () => {
+    let cookies = document.cookie.split(";");
+    console.log(`cookies ${cookies} to be deleted`);
+
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i];
+        let eqPos = cookie.indexOf("=");
+        let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = `cookiename= ${name}; ${time()-1000}, '/', '.domain.com'`;
+        console.log(`cookie ${name} deleted`);
+    }
+}
+
 // create GOOGLE ANALYTICS scripts MANUALLY
 // <script data-cookiecategory="targeting" async src="https://www.googletagmanager.com/gtag/js?id=UA-159826830-1"></script>
 const loadGoogleAnalyticsFn = () => {
@@ -36,18 +46,18 @@ const loadGoogleAnalyticsFn = () => {
     document.head.append(gascript1);
 
     const gascript2 = document.createElement('script');
-    gascript2.src = '/gdpr-cookie-consent/aead_ga.js';
-    // TODO make it inline eg gascript2.innerHTML = 'pure js code';
+    gascript2.src = 'aead_ga.js';
     document.head.append(gascript2);
 }
+
 
 const enableScripts = (acceptedCookieCategory) => {
     // disabled scripts are plain text
     // enabled are converted to javascript
-    const scripts = document.getElementsByTagName('script');
+    let scripts = document.getElementsByTagName('script');
     for (let i = 0; i < scripts.length; i++) {
         if (scripts[i].dataset.cookiecategory == acceptedCookieCategory) {
-    
+            
             console.log(i, scripts[i].dataset.cookiecategory);
             scripts[i].type = 'text/javascript';
             console.log(scripts[i], ' changed');
@@ -55,10 +65,16 @@ const enableScripts = (acceptedCookieCategory) => {
     }
 }
 
+const msg = (myid) => {
+
+}
+
+
+
 const enableIframes = (acceptedCookieCategory) => {
 
     // if iframes are accepted enable them
-    const iframes = document.getElementsByTagName('iframe');
+    let iframes = document.getElementsByTagName('iframe');
     for (let i = 0; i < iframes.length; i++) {
         if (iframes[i].dataset.src && iframes[i].dataset.cookiecategory == acceptedCookieCategory) {
     
@@ -95,6 +111,9 @@ window.onload = () => {
         // 0. initialize variables
         const functionalityCookie = document.getElementById('functionality-cookie');
         const targetingCookie = document.getElementById('targeting-cookie');
+
+        // TODO: IF COOKIES EXIST, DESTROY THEM
+        deleteAllCookies();
 
         consent_level = 'strict' + ' '; // just for reference
 
@@ -159,17 +178,53 @@ window.onload = () => {
     })
 
 
+
+    // TODO convert iframes to img
+    const hideYouTubeIframeFn = () => {
+        let iframes = document.getElementsByTagName('iframe');
+        for (let i = 0; i < iframes.length; i++) {
+            // if iframe has data-src, it means it should be hidden on purpose
+            if (iframes[i].dataset.src) {
+                iframes[i].setAttribute('src', 'image.jpg')
+
+                let mydiv = document.createElement('div');
+                mydiv.setAttribute('id', 'msg' + i);
+                mydiv.innerHTML = 'Για την προβολή των βίντεο μέσω της πλατφόρμας YouTube, είναι απαραίτητο να αποδεχθείτε τα cookies λειτουργικότητας!!';            
+                // let a = document.createElement('a');
+                // // a.setAttribute('id', 'accept');
+                // a.setAttribute('href', '#');
+                // a.innerHTML = 'Enable cookie banner!!';            
+
+                // mydiv.appendChild(a);
+                iframes[i].insertAdjacentElement('afterend', mydiv);
+                // a.addEventListener('click', enableCookieBannerFn() );
+
+
+            }
+        }
+
+    }
+
+
     // IF cookie is missing display consent banner...
     if (shouldShowPopup(storageType)) {
 
+        hideYouTubeIframeFn();
         enableCookieBannerFn();
 
-        // TODO convert iframes to img
 
-        // ... ELSE loop through stored cookie's accepted categories and enable scripts
+    // ... ELSE loop through stored cookie's accepted categories and enable scripts
     } else {
 
-        const cookiesAcceptedCategories = storageType.getItem(consentPropertyName).split(' '); 
+        const cookiesAcceptedCategories = storageType.getItem(consentPropertyName).split(' ');
+        
+        //check ONLY ONCE IF functionality cookies are allowed
+        // if NO hide YouTube iframes
+        // the code is outside loop because of negative parameter
+        if (![...cookiesAcceptedCategories].includes('functionality')) {
+            hideYouTubeIframeFn();
+        }
+
         cookiesAcceptedCategories.forEach(category => {
             // ENABLE GOOGLE ANALYTICS IF ACCEPTED
             if (category == 'targeting') {
@@ -178,6 +233,9 @@ window.onload = () => {
 
             enableScripts(category);
             console.log(' cookie is here scripts enabled ' + category);
+
+         
+
             enableIframes(category);
             console.log(' cookie is here frames enabled '+ category);
             
