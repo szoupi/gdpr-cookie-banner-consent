@@ -16,3 +16,7 @@ and remove src attribute
 * Load css file
 
 * Load js file
+
+## ASSETS
+
+add *_ga.js and .png to site root /

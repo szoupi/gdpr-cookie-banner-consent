@@ -32,7 +32,7 @@ const deleteAllCookies = () => {
         let cookie = cookies[i];
         let eqPos = cookie.indexOf("=");
         let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = `cookiename= ${name}; ${time()-1000}, '/', '.domain.com'`;
+        document.cookie = `cookiename= ${name}; expires = Thu, 01 Jan 1970 00:00:00 GMT`;
         console.log(`cookie ${name} deleted`);
     }
 }
@@ -46,7 +46,8 @@ const loadGoogleAnalyticsFn = () => {
     document.head.append(gascript1);
 
     const gascript2 = document.createElement('script');
-    gascript2.src = 'aead_ga.js';
+    // TODO make dynamic variable
+    gascript2.src = 'https://aead.gr/aead_ga.js';
     document.head.append(gascript2);
 }
 
@@ -145,6 +146,9 @@ window.onload = () => {
         //3. hide msg banner
         consentPopup.classList.add('hidden'); 
 
+        //4. reload page
+        location.reload();
+
     }
 
     
@@ -185,11 +189,12 @@ window.onload = () => {
         for (let i = 0; i < iframes.length; i++) {
             // if iframe has data-src, it means it should be hidden on purpose
             if (iframes[i].dataset.src) {
-                iframes[i].setAttribute('src', 'image.jpg')
+                // make dynamic varibles
+                iframes[i].setAttribute('src', 'video-blocked-accept-cookies-first.png')
 
                 let mydiv = document.createElement('div');
                 mydiv.setAttribute('id', 'msg' + i);
-                mydiv.innerHTML = 'Για την προβολή των βίντεο μέσω της πλατφόρμας YouTube, είναι απαραίτητο να αποδεχθείτε τα cookies λειτουργικότητας!!';            
+                mydiv.innerHTML = 'Για την προβολή των βίντεο μέσω της πλατφόρμας YouTube, είναι απαραίτητο να αποδεχθείτε τα cookies λειτουργικότητας, σύμφωνα με την <a href="politiki-cookies" id="#"> Πολιτική cookies </a>';            
                 // let a = document.createElement('a');
                 // // a.setAttribute('id', 'accept');
                 // a.setAttribute('href', '#');

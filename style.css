@@ -17,7 +17,7 @@
 
 #acceptAll {
     padding: 1rem;
-    color: #000;
+    color: #000 !important;
     background-color: #ff0;
     text-decoration: none;
     font-weight: 800;
@@ -30,7 +30,7 @@
 #accept {
     padding: 1rem;
     background-color: #eaeaea;
-    color: #111;
+    color: #111 !important;
     text-decoration: none;
     font-weight: 800;
     border-radius: 2px;
