@@ -5,6 +5,8 @@
  * targeting
  * 
  */
+// const messageImage = video-blocked-accept-cookies-first.png
+
 
 
 // set and get cookies function
@@ -113,7 +115,6 @@ window.onload = () => {
         const functionalityCookie = document.getElementById('functionality-cookie');
         const targetingCookie = document.getElementById('targeting-cookie');
 
-        // TODO: IF COOKIES EXIST, DESTROY THEM
         deleteAllCookies();
 
         consent_level = 'strict' + ' '; // just for reference
