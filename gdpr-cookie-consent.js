@@ -191,7 +191,7 @@ window.onload = () => {
             // if iframe has data-src, it means it should be hidden on purpose
             if (iframes[i].dataset.src) {
                 // make dynamic varibles
-                iframes[i].setAttribute('src', 'video-blocked-accept-cookies-first.png')
+                iframes[i].setAttribute('src', 'https://aead.gr/video-blocked-accept-cookies-first.png')
 
                 let mydiv = document.createElement('div');
                 mydiv.setAttribute('id', 'msg' + i);
