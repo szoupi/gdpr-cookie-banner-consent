@@ -7,7 +7,7 @@
     <input type="checkbox" id="strict-cookie" name="strict-cookie" checked="true" disabled='true'>
     <label for="strict-cookie"> Αναγκαία</label>
     <input type="checkbox" id="functionality-cookie" name="functionality-cookie" value="functionality">
-    <label for="functionality-cookie"> Λειτουργικότητας (YouTube)</label>
+    <label for="functionality-cookie"> Λειτουργικότητας</label>
     <input type="checkbox" id="targeting-cookie" name="targeting-cookie" value="targeting">
     <label for="targeting-cookie"> Ανάλυσης (Google Analytics)</label>
   </p>

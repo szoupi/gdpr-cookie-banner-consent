@@ -99,8 +99,9 @@ const shouldShowPopup = () => !storageType.getItem(consentPropertyName);
 // if consent is given set cookie value to true
 let consent_level = '';
 const consent_max_age =';max-age=5184000' // 2 months 60x60x24x60, ;key=value format
+const consent_path =';Path=%x2F' // path = /, ;key=value format
 
-const saveToStorage = () => storageType.setItem(consentPropertyName, consent_level + consent_max_age);
+const saveToStorage = () => storageType.setItem(consentPropertyName, consent_level + consent_max_age + consent_path);
 
 console.log(saveToStorage)
 
@@ -199,7 +200,7 @@ window.onload = () => {
 
                 let mydiv = document.createElement('div');
                 mydiv.setAttribute('id', 'msg' + i);
-                mydiv.innerHTML = 'Για την προβολή των βίντεο μέσω της πλατφόρμας YouTube, είναι απαραίτητο να αποδεχθείτε τα <div><a class="button" id="enable-cookie-banner" href="#">cookies λειτουργικότητας</a></div>σύμφωνα με την <a href="politiki-cookies" id="#"> Πολιτική cookies </a>';            
+                mydiv.innerHTML = 'Για την προβολή των βίντεο μέσω της πλατφόρμας YouTube, είναι απαραίτητο να αποδεχθείτε τα cookies λειτουργικότητας. Παρακαλούμε επισκεφθείτε τη σελίδα της <a href="https://aead.gr/politiki-cookies" id="#"> Πολιτικής μας για τα cookies </a>';            
                 // let a = document.createElement('a');
                 // // a.setAttribute('id', 'accept');
                 // a.setAttribute('href', '#');
