@@ -199,7 +199,7 @@ window.onload = () => {
 
                 let mydiv = document.createElement('div');
                 mydiv.setAttribute('id', 'msg' + i);
-                mydiv.innerHTML = 'Για την προβολή των βίντεο μέσω της πλατφόρμας YouTube, είναι απαραίτητο να αποδεχθείτε τα <a id="enable-cookie-banner" href="#">cookies λειτουργικότητας</a>, σύμφωνα με την <a href="politiki-cookies" id="#"> Πολιτική cookies </a>';            
+                mydiv.innerHTML = 'Για την προβολή των βίντεο μέσω της πλατφόρμας YouTube, είναι απαραίτητο να αποδεχθείτε τα <div><a id="enable-cookie-banner" href="#">cookies λειτουργικότητας</a></div>, σύμφωνα με την <a href="politiki-cookies" id="#"> Πολιτική cookies </a>';            
                 // let a = document.createElement('a');
                 // // a.setAttribute('id', 'accept');
                 // a.setAttribute('href', '#');
