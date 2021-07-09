@@ -9,6 +9,9 @@
 data-src="https://www.youtube-nocookie.com/embed/1AzXWLadbo0" 
 data-cookiecategory="functionality" 
 and remove src attribute
+BUG: JOOMLA REMOVES THE IFRAME IF I CHANGE IT
+SHOULD CHANGE IT WITH JS ON THE FLY
+
 
 ### OTHER SCRIPTS
 <!-- * Change script type="text/javascript" to script type="text/plain"  -->

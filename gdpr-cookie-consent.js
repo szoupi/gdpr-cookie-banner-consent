@@ -177,7 +177,11 @@ window.onload = () => {
         saveToStorage(storageType);
         loadGoogleAnalyticsFn();
 
-        consentPopup.classList.add('hidden'); 
+        //3. hide msg banner
+        consentPopup.classList.add('hidden');
+         
+        //4. reload page
+        location.reload();
 
 
     })
