@@ -19,7 +19,7 @@ SHOULD CHANGE IT WITH JS ON THE FLY
 
 
 ## COOKIE BANNER
-Add cookie html banner to the footer of the page 
+Add cookie html banner to the footer of the page as module (in wp use plugin "Custom CSS and JS)
 
 ## LINK TO BANNER
 Add link with id="enable-cookie-banner" at bottom of the page:
@@ -27,7 +27,7 @@ Add link with id="enable-cookie-banner" at bottom of the page:
 
 
 
-## ASSETS
+## ASSETS (JOOMLA MAINLY)
 * upload aead_ga.js to to site root /
 * upload video-blocked-accept-cookies-first.png files to site root /
 * Create folder "gdpr-cookie-consent" to site root / and upload there only gdpr-cookie-consent.js and style.css. These are the files that are loaded at the head

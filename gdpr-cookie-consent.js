@@ -99,11 +99,12 @@ const shouldShowPopup = () => !storageType.getItem(consentPropertyName);
 // if consent is given set cookie value to true
 let consent_level = '';
 const consent_max_age =';max-age=5184000' // 2 months 60x60x24x60, ;key=value format
-const consent_path =';Path=%x2F' // path = /, ;key=value format
+// TODO fix bug path does not work
+const consent_path =';path="/"' // path = /, ;key=value format  
 
 const saveToStorage = () => storageType.setItem(consentPropertyName, consent_level + consent_max_age + consent_path);
 
-console.log(saveToStorage)
+console.log(consentPropertyName, consent_level + consent_max_age + consent_path)
 
 
 // ///////////////////////////////////////////////////////////////////////////////////
@@ -175,6 +176,8 @@ window.onload = () => {
     acceptAllBtn.addEventListener('click', () => {
         console.log('acceptAll selected');
         consent_level = 'strict functionality targeting'; // add all categories that apply
+
+        deleteAllCookies();
         saveToStorage(storageType);
         loadGoogleAnalyticsFn();
 
@@ -183,11 +186,23 @@ window.onload = () => {
 
         //4. reload page
         location.reload();
-
-
     })
 
+    //TODO: DECLINE ALL
+    // const declineAllBtn = document.getElementById('decline');
+    // declineAllBtn.addEventListener('click', () => {
+    //     console.log('decline selected');
+    //     consent_level = 'strict'; // add all categories that apply
 
+    //     deleteAllCookies();
+    //     saveToStorage(storageType);
+
+    //     //3. hide msg banner
+    //     consentPopup.classList.add('hidden');
+
+    //     //4. reload page
+    //     location.reload();
+    })
 
     // TODO convert iframes to img
     const hideYouTubeIframeFn = () => {
