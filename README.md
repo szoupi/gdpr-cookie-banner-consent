@@ -6,6 +6,8 @@
 2/2 IN THE aead_ga.js FILE change the UA id of google script
 
 ### YOUTUBE IFRAME
+Μη αποδεκτή λύση διότι
+Λειτουργεί μόνο με τη προσθήκη data-src αντί για src
 data-src="https://www.youtube-nocookie.com/embed/1AzXWLadbo0" 
 data-cookiecategory="functionality" 
 and remove src attribute
@@ -30,8 +32,8 @@ Add link with id="enable-cookie-banner" at bottom of the page:
 ## ASSETS (JOOMLA MAINLY)
 * upload aead_ga.js to to site root /
 * upload video-blocked-accept-cookies-first.png files to site root /
-* Create folder "gdpr-cookie-consent" to site root / and upload there only gdpr-cookie-consent.js and style.css. These are the files that are loaded at the head
+* Create folder "gdpr-cookie-consent" to site root / and upload there only gdpr-cookie-consent.js and style.css. These are the files that are loaded at the head (automatically???)
 
 ## AT THE HEAD OF THE PAGE
-* Load /gdpr-cookie-consent/style.css 
+* Load /gdpr-cookie-consent/style.css  
 * Load /gdpr-cookie-consent/gdpr-cookie-consent.js 

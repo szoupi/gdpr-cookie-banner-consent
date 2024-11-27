@@ -16,7 +16,7 @@
     z-index:100000000;
 }
 
-#acceptAll {
+/* #acceptAll {
     padding: 1rem;
     color: #000 !important;
     background-color: #ff0;
@@ -26,9 +26,9 @@
     min-width: 7rem;
     text-align: center;
 
-}
+} */
 
-#accept {
+#acceptSelected, #acceptAll, #denyAll {
     padding: 1rem;
     background-color: #eaeaea;
     color: #111 !important;

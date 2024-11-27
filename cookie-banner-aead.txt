@@ -3,21 +3,22 @@
     Χρησιμοποιούμε τα cookies που είναι αναγκαία για τη διατήρηση της σύνδεσής σας στις ηλεκτρονικές υπηρεσίες της Διαδικτυακής Πύλης (ΔΠ) της Αρχής και για την αποθήκευση των επιλογών σας σε σχέση με τα προαιρετικά cookies («Αναγκαία»).
   Με τη συγκατάθεσή σας και μόνο θα χρησιμοποιήσουμε όποια από τα ακόλουθα προαιρετικά cookies επιλέξετε («Ανάλυσης», «Λειτουργικότητας»). 
   </p>
+  
   <p>
     <input type="checkbox" id="strict-cookie" name="strict-cookie" checked="true" disabled='true'>
     <label for="strict-cookie"> Αναγκαία</label>
+
     <input type="checkbox" id="functionality-cookie" name="functionality-cookie" value="functionality">
-    <label for="functionality-cookie"> Λειτουργικότητας</label>
+    <label for="functionality-cookie"> Λειτουργικότητας (YouTube)</label>
+
     <input type="checkbox" id="targeting-cookie" name="targeting-cookie" value="targeting">
     <label for="targeting-cookie"> Ανάλυσης (Google Analytics)</label>
   </p>
+
   <div style="margin-top: 2rem;">
     <a id="acceptAll" href="#">Αποδοχή όλων</a>
-
-    <a id="accept" href="#">Αποδοχή Επιλεγμένων
-    </a>
-
-  
+    <a id="denyAll" href="#">Απόρριψη όλων</a>    
+    <a id="accept" href="#">Αποδοχή Επιλεγμένων</a>
   </div>
 </div>
 <div>

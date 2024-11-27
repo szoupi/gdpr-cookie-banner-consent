@@ -27,17 +27,27 @@ const cookieStorage = {
 }
 
 const deleteAllCookies = () => {
-    let cookies = document.cookie.split(";");
-    console.log(`cookies ${cookies} to be deleted`);
+    // Λήψη όλων των cookies
+    const cookies = document.cookie.split(";");
 
-    for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i];
-        let eqPos = cookie.indexOf("=");
-        let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = `cookiename= ${name}; expires = Thu, 01 Jan 1970 00:00:00 GMT`;
-        console.log(`cookie ${name} deleted`);
+    // Διαγραφή κάθε cookie
+    for (let cookie of cookies) {
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+
+        // Ορισμός του cookie με παρελθοντική ημερομηνία λήξης
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+
+        // Εναλλακτικά, αν το cookie έχει οριστεί με συγκεκριμένο domain
+        const domainParts = window.location.hostname.split(".");
+        while (domainParts.length > 0) {
+            const domain = domainParts.join(".");
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${domain}`;
+            domainParts.shift();
+        }
     }
-}
+    console.log("Όλα τα cookies διαγράφηκαν.");
+};
 
 // create GOOGLE ANALYTICS scripts MANUALLY
 // <script data-cookiecategory="targeting" async src="https://www.googletagmanager.com/gtag/js?id=UA-159826830-1"></script>
@@ -53,7 +63,7 @@ const loadGoogleAnalyticsFn = () => {
     document.head.append(gascript2);
 }
 
-
+// Nα γίνει έλεγχος για μη έγκυρα ή κενά δεδομένα στο dataset.cookiecategory.
 const enableScripts = (acceptedCookieCategory) => {
     // disabled scripts are plain text
     // enabled are converted to javascript
@@ -61,9 +71,9 @@ const enableScripts = (acceptedCookieCategory) => {
     for (let i = 0; i < scripts.length; i++) {
         if (scripts[i].dataset.cookiecategory == acceptedCookieCategory) {
             
-            console.log(i, scripts[i].dataset.cookiecategory);
-            scripts[i].type = 'text/javascript';
-            console.log(scripts[i], ' changed');
+            console.log(i, scripts[i].dataset.cookiecategory); // Εμφανίζει το index και την κατηγορία.
+            scripts[i].type = 'text/javascript'; // Μετατρέπει τον τύπο του script ώστε να εκτελείται.
+            console.log(scripts[i], ' changed'); // Ενημερώνει για το αλλαγμένο script
         }
     }
 }
@@ -90,7 +100,7 @@ const enableIframes = (acceptedCookieCategory) => {
 
 
 const storageType = cookieStorage; //set storage type to cookies
-const consentPropertyName = 'cookie_consent_user_accepted'; //custom name for our cookie 
+const consentPropertyName = 'user_cookie_consent'; //custom name for our cookie 
 
 //ask/show msg banner if consent cookie is missing
 const shouldShowPopup = () => !storageType.getItem(consentPropertyName); 
@@ -99,19 +109,18 @@ const shouldShowPopup = () => !storageType.getItem(consentPropertyName);
 // if consent is given set cookie value to true
 let consent_level = '';
 const consent_max_age =';max-age=5184000' // 2 months 60x60x24x60, ;key=value format
-// TODO fix bug path does not work
 const consent_path =';path="/"' // path = /, ;key=value format  
 
 const saveToStorage = () => storageType.setItem(consentPropertyName, consent_level + consent_max_age + consent_path);
 
-console.log(consentPropertyName, consent_level + consent_max_age + consent_path)
+// console.log(consentPropertyName, consent_level + consent_max_age + consent_path)
 
 
 // ///////////////////////////////////////////////////////////////////////////////////
 window.onload = () => {
     
     // it is called when the accept button is clicked
-    const acceptFn = event => {
+    const acceptSelectedFn = event => {
 
         // 0. initialize variables
         const functionalityCookie = document.getElementById('functionality-cookie');
@@ -137,12 +146,13 @@ window.onload = () => {
             .split(' ')
             .forEach(category => {
                 enableScripts(category);
-                console.log(' enable script with category ' + category);
+                // console.log(' enable script with category ' + category);
                 enableIframes(category);
-                console.log('enable iframe with category ' + category);                
+                // console.log('enable iframe with category ' + category);                
             });
         
-        console.log(consent_level);       
+        // console.log(consent_level); 
+
         saveToStorage(storageType);   
         
         
@@ -164,8 +174,8 @@ window.onload = () => {
     
 
     const consentPopup = document.getElementById('consent-popup');
-    const acceptBtn = document.getElementById('accept');
-    acceptBtn.addEventListener('click', acceptFn);
+    const acceptBtn = document.getElementById('acceptSelected');
+    acceptBtn.addEventListener('click', acceptSelectedFn);
     
     // SHOW COOKIE BANNER MANUALLY
     const enableCookieBannerBtn = document.getElementById('enable-cookie-banner');
@@ -188,20 +198,20 @@ window.onload = () => {
         location.reload();
     })
 
-    //TODO: DECLINE ALL
-    // const declineAllBtn = document.getElementById('decline');
-    // declineAllBtn.addEventListener('click', () => {
-    //     console.log('decline selected');
-    //     consent_level = 'strict'; // add all categories that apply
+    // DENY ALL
+    const denyAllBtn = document.getElementById('denyAll');
+    denyAllBtn.addEventListener('click', () => {
+        console.log('Deny all cookies');
+        consent_level = 'strict'; // add all categories that apply
 
-    //     deleteAllCookies();
-    //     saveToStorage(storageType);
+        deleteAllCookies();
+        saveToStorage(storageType);
 
-    //     //3. hide msg banner
-    //     consentPopup.classList.add('hidden');
+        //3. hide msg banner
+        consentPopup.classList.add('hidden');
 
-    //     //4. reload page
-    //     location.reload();
+        //4. reload page
+        location.reload();
     })
 
     // TODO convert iframes to img
@@ -258,12 +268,11 @@ window.onload = () => {
             } 
 
             enableScripts(category);
-            console.log(' cookie is here scripts enabled ' + category);
-
-         
+            // console.log(' cookie is here scripts enabled ' + category);
+        
 
             enableIframes(category);
-            console.log(' cookie is here frames enabled '+ category);
+            // console.log(' cookie is here frames enabled '+ category);
             
         }); 
     }
