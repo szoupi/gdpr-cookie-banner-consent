@@ -50,16 +50,17 @@ const deleteAllCookies = () => {
 };
 
 // create GOOGLE ANALYTICS scripts MANUALLY
-// <script data-cookiecategory="targeting" async src="https://www.googletagmanager.com/gtag/js?id=UA-159826830-1"></script>
+// https://analytics.google.com/analytics/web/#/a159826830p382141417/admin/streams/table/5364016121
 const loadGoogleAnalyticsFn = () => {
     const gascript1 = document.createElement('script');
-    gascript1.src = 'https://www.googletagmanager.com/gtag/js?id=UA-159826830-1';
+    gascript1.src = 'https://www.googletagmanager.com/gtag/js?id=G-QD1JXRGNFH';
     gascript1.async = true;
     document.head.append(gascript1);
 
+    // load from file the second GA4 script
     const gascript2 = document.createElement('script');
     // TODO make dynamic variable
-    gascript2.src = 'https://aead.gr/aead_ga.js';
+    gascript2.src = 'https://aead.gr/gdpr-cookie-consent/aead_ga.js';
     document.head.append(gascript2);
 }
 
